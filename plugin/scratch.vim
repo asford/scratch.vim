@@ -53,7 +53,7 @@ let ScratchBufferName = "__Scratch__"
 
 " ScratchBufferOpen
 " Open the scratch buffer
-function! s:ScratchBufferOpen(new_win)
+function! s:ScratchBufferOpen(new_win,vertical_split)
     let split_win = a:new_win
 
     " If the current buffer is modified then open the scratch buffer in a new
@@ -104,7 +104,8 @@ endfunction
 autocmd BufNewFile __Scratch__ call s:ScratchMarkBuffer()
 
 " Command to edit the scratch buffer in the current window
-command! -nargs=0 Scratch call s:ScratchBufferOpen(0)
-" Command to open the scratch buffer in a new split window
-command! -nargs=0 Sscratch call s:ScratchBufferOpen(1)
-
+command! -nargs=0 Scratch call s:ScratchBufferOpen(0,0)
+" Command to open the scratch buffer in a new horizontal split window
+command! -nargs=0 Sscratch call s:ScratchBufferOpen(1,0)
+" Command to open the scratch buffer in a new vertical split window
+command! -nargs=0 Vscratch call s:ScratchBufferOpen(1,1)
