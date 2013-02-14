@@ -55,6 +55,7 @@ let ScratchBufferName = "__Scratch__"
 " Open the scratch buffer
 function! s:ScratchBufferOpen(new_win,vertical_split)
     let split_win = a:new_win
+    let vertical_split = a:vertical_split
 
     " If the current buffer is modified then open the scratch buffer in a new
     " window
@@ -67,7 +68,11 @@ function! s:ScratchBufferOpen(new_win,vertical_split)
     if scr_bufnum == -1
         " open a new scratch buffer
         if split_win
-            exe "new " . g:ScratchBufferName
+            if vertical_split
+                exe "vnew " . g:ScratchBufferName
+            else
+                exe "new " . g:ScratchBufferName
+            endif
         else
             exe "edit " . g:ScratchBufferName
         endif
@@ -84,7 +89,11 @@ function! s:ScratchBufferOpen(new_win,vertical_split)
         else
             " Create a new scratch buffer
             if split_win
-                exe "split +buffer" . scr_bufnum
+                if vertical_split
+                    exe "vsplit +buffer" . scr_bufnum
+                else
+                    exe "split +buffer" . scr_bufnum
+                endif
             else
                 exe "buffer " . scr_bufnum
             endif
